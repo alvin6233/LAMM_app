@@ -45,7 +45,8 @@ args = {
 }
 
 model = LAMMPEFTModel(**args)
-delta_ckpt = torch.load('pytorch_model.pt', map_location=torch.device('cpu'))
+# , map_location=torch.device('cpu')
+delta_ckpt = torch.load(args['delta_ckpt_path'])
 model.load_state_dict(delta_ckpt, strict=False)
 model = model.eval().half().cuda()
 print(f'[!] init the 13b model over ...')
