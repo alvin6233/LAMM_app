@@ -28,7 +28,7 @@ os.system('ls -l {}'.format(os.path.join(XLAB_CACHE, '.cache/model', 'lamm_7b_lo
 # init the model
 args = {
     'model': 'openllama_peft',
-    'encoder_ckpt_path': os.path.join(XLAB_CACHE, '.cache/model', 'LAMM_openai_clip_vit_14-l/ViT-L-14.pt'),
+    'encoder_ckpt_path': os.path.join(XLAB_CACHE, '.cache/model', 'LAMM_openai_clip_vit_14-l', 'ViT-L-14.pt'),
     'vicuna_ckpt_path': os.path.join(XLAB_CACHE, '.cache/model', 'LAMM_lamm_llm_7b_v0'),
     'delta_ckpt_path': os.path.join(XLAB_CACHE, '.cache/model', 'LAMM_lamm_7b_lora32_186k', 'pytorch_model.pt'),
     'stage': 2,
@@ -45,7 +45,7 @@ args = {
 }
 
 model = LAMMPEFTModel(**args)
-delta_ckpt = torch.load(args['delta_ckpt_path'], map_location=torch.device('cpu'))
+delta_ckpt = torch.load('pytorch_model.pt', map_location=torch.device('cpu'))
 model.load_state_dict(delta_ckpt, strict=False)
 model = model.eval().half().cuda()
 print(f'[!] init the 13b model over ...')
